@@ -11,6 +11,9 @@ interface EnvConfig {
   STAGE_4_WEBHOOK: string;
   DATABASE_URL: string;
   ENCRYPTION_SECRET: string;
+  GEMINI_API_KEY: string;
+  SUPABASE_URL: string;
+  SUPABASE_KEY: string;
 }
 
 const getEnv = (): EnvConfig => {
@@ -34,6 +37,21 @@ const getEnv = (): EnvConfig => {
   if (!ENCRYPTION_SECRET) {
     throw new Error('Missing environment variable: ENCRYPTION_SECRET');
   }
+
+  const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+  if (!GEMINI_API_KEY) {
+    throw new Error('Missing environment variable: GEMINI_API_KEY');
+  }
+
+  const SUPABASE_URL = process.env.SUPABASE_URL;
+  if (!SUPABASE_URL) {
+    throw new Error('Missing environment variable: SUPABASE_URL');
+  }
+
+  const SUPABASE_KEY = process.env.SUPABASE_KEY;
+  if (!SUPABASE_KEY) {
+    throw new Error('Missing environment variable: SUPABASE_KEY');
+  }
   
   if (ENCRYPTION_SECRET.length < 32) {
     throw new Error('ENCRYPTION_SECRET must be at least 32 characters long for AES-256');
@@ -45,7 +63,10 @@ const getEnv = (): EnvConfig => {
     STAGE_3_WEBHOOK,
     STAGE_4_WEBHOOK,
     DATABASE_URL,
-    ENCRYPTION_SECRET
+    ENCRYPTION_SECRET,
+    GEMINI_API_KEY,
+    SUPABASE_URL,
+    SUPABASE_KEY
   };
 };
 

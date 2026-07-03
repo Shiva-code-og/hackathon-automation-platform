@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
 import { env } from './config/env';
 
 import { workflowRoutes } from './routes/workflowRoutes';
@@ -11,6 +12,7 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, '../public')));
 
 // Routes
 app.use('/api/workflow', workflowRoutes);
@@ -22,6 +24,10 @@ app.get('/health', (req, res) => {
 });
 
 // Start Server
-app.listen(env.PORT, () => {
-  console.log(`Server is running on port ${env.PORT}`);
-});
+if (!process.env.VERCEL) {
+  app.listen(env.PORT, () => {
+    console.log(`Server is running on port ${env.PORT}`);
+  });
+}
+
+export default app;
