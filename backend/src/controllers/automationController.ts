@@ -12,8 +12,13 @@ export const automationController = {
         return;
       }
 
+      // Get the base URL dynamically from the request (handling proxies)
+      const protocol = (req.headers['x-forwarded-proto'] as string) || req.protocol;
+      const host = (req.headers['x-forwarded-host'] as string) || req.get('host');
+      const baseUrl = `${protocol}://${host}`;
+
       // Process query with Gemini to generate the embed script and prompt
-      const aiResponse = await aiService.processUserQuery(userQuery, managerEmail);
+      const aiResponse = await aiService.processUserQuery(userQuery, managerEmail, baseUrl);
 
       res.json({ 
         prompt: aiResponse.message, 

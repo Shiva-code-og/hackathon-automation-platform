@@ -8,7 +8,7 @@ export interface AiResponse {
 }
 
 export const aiService = {
-  async processUserQuery(userQuery: string, managerEmail?: string): Promise<AiResponse> {
+  async processUserQuery(userQuery: string, managerEmail?: string, baseUrl: string = 'http://localhost:5000'): Promise<AiResponse> {
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${env.GEMINI_API_KEY}`;
     
     const systemPrompt = `
@@ -83,7 +83,7 @@ export const aiService = {
       await store.saveWebhookToken(token, args.webhook_url);
 
       const snippet = `<script 
-  src="http://localhost:5000/embed.js" 
+  src="${baseUrl}/embed.js" 
   data-integration-token="${token}" 
   data-manager="${managerEmail || 'manager@example.com'}"
   data-bot-prompt="${args.chatbot_system_prompt}">

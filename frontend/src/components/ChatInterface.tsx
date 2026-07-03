@@ -97,8 +97,9 @@ export const ChatInterface = ({ sessionId }: ChatInterfaceProps) => {
         }
       }
 
-      // Hit the backend
-      const response = await axios.post('/api/automations/generate-prompt', { 
+      // Hit the backend (supporting dynamic VITE_API_URL environment variable for production)
+      const apiBaseUrl = import.meta.env.VITE_API_URL || '';
+      const response = await axios.post(`${apiBaseUrl}/api/automations/generate-prompt`, { 
         userQuery: userMessage.content,
         managerEmail: managerEmail
       });
