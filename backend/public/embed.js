@@ -192,7 +192,7 @@
 
   function appendMessage(text, sender) {
     const msgEl = document.createElement('div');
-    msgEl.className = \`agentops-message agentops-message-\${sender}\`;
+    msgEl.className = `agentops-message agentops-message-${sender}`;
     msgEl.textContent = text;
     messagesEl.appendChild(msgEl);
     messagesEl.scrollTop = messagesEl.scrollHeight;
@@ -214,7 +214,7 @@
       const scriptUrl = new URL(scriptTag.src);
       const backendBaseUrl = scriptUrl.origin;
       
-      const response = await fetch(\`\${backendBaseUrl}/api/automations/trigger\`, {
+      const response = await fetch(`${backendBaseUrl}/api/automations/trigger`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
